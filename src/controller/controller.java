@@ -1,9 +1,6 @@
 package controller;
 import views.view;
 import model.person;
-import controller.SortingMethods;
-import controller.SearchMethods;
-import java.util.Scanner;
 
 public class controller {
     private view view;
@@ -11,25 +8,46 @@ public class controller {
     private SortingMethods sortingMethods;
     private SearchMethods searchMethods;
 
-    public controller(view view, SortingMethods sortingMethods, SearchMethods searchMethods, int n) {
+    public controller() {
         this.view = new view();
         this.sortingMethods = new SortingMethods();
         this.searchMethods = new SearchMethods();
-        this.persons = new person[n];
-        Scanner scanner = new Scanner(System.in);
     }
+    
     public void start(){
         int option = 0;
-        option=view.showMenu();
+        do {
+            
+            
+            option = view.showMenu();
+            switch (option) {
+                case 1:
+                    inputPerson();
+                    break;
+                case 2:
+                    sortPersons();
+                    break;
+                case 3:
+                    searchPerson();
+                    break;
+                case 4:
+                    view.displayPerson(persons, persons.length);
+                    break;
+                case 5:
+                    System.out.println("Saliendo...");
+                    break;
+                default:
+                    System.out.println("Opcion invalida, intente de nuevo.");
+            }
+
+        }while (option != 5); 
     }
     public void inputPerson(){
-        person newPerson = view.inputPerson();
-        person[] newPersons = new person[persons.length + 1];
-        for (int i = 0; i < persons.length; i++) {
-            newPersons[i] = persons[i];
+        int size = view.inputSize();
+        persons = new person[size];
+        for (int i = 0; i < size; i++) {
+            persons[i] = view.inputPerson();
         }
-        newPersons[newPersons.length - 1] = newPerson;
-        persons = newPersons;
     }
     public void sortPersons(){
         int option = view.selectSortingMethod();
@@ -47,7 +65,7 @@ public class controller {
                 sortingMethods.sortByAgeWithInsertion(persons);
                 break;
             default:
-                System.out.println("Invalid option");
+                System.out.println("opcion invalida");
         }
     }
     public void searchPerson(){
@@ -58,12 +76,12 @@ public class controller {
                 if (searchMethods.isSortedByName(persons)) {
                     person foundPerson = searchMethods.binarySearchByName(persons, name);
                     if (foundPerson != null) {
-                        System.out.println("Found: " + foundPerson.toString());
+                        System.out.println("Encontrado: " + foundPerson.toString());
                     } else {
-                        System.out.println("Not found");
+                        System.out.println("No Encontrado");
                     }
                 } else {
-                    System.out.println("Array not sorted by name");
+                    System.out.println("Lista no ordenada por nombre");
                 }
                 break;
             case 2:
@@ -71,16 +89,16 @@ public class controller {
                 if (searchMethods.isSortedByAge(persons)) {
                     person foundPerson = searchMethods.binarySearchByAge(persons, age);
                     if (foundPerson != null) {
-                        System.out.println("Found: " + foundPerson.toString());
+                        System.out.println("Encontrado: " + foundPerson.toString());
                     } else {
-                        System.out.println("Not found");
+                        System.out.println("No Encontrado");
                     }
                 } else {
-                    System.out.println("Array not sorted by age");
+                    System.out.println("Lista no ordenada por edad");
                 }
                 break;
             default:
-                System.out.println("Invalid option");
+                System.out.println("opcion invalida");
         }
     }
 

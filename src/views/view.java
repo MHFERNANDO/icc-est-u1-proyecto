@@ -6,7 +6,7 @@ public class view {
     
     public int showMenu(){
         System.out.println("Ingrese una opcion: "); 
-        System.out.println("1. Agregar persona ");
+        System.out.println("1. Cambiar persona ");
         System.out.println("2. Ordenar personas ");
         System.out.println("3. Buscar persona ");
         System.out.println("4. Mostrar personas ");
@@ -15,7 +15,7 @@ public class view {
     }
     public person inputPerson(){
         System.out.println("Enter name: ");
-        String name = leer.nextLine();
+        String name = leer.next();
         System.out.println("Enter age: ");
         int age = leer.nextInt();
         return new person(name, age);
@@ -23,9 +23,9 @@ public class view {
     public int selectSortingMethod(){
         System.out.println("Select sorting method: ");
         System.out.println("1. Metodo de Burbuja");
-        System.out.println("2. Metodo de Seleccion");
-        System.out.println("3. Metodo de Insercion");
-        System.out.println("4. Metodo de Burbuja Mejorado");
+        System.out.println("2. Metodo de Seleccion por Nombre");
+        System.out.println("3. Metodo de Insercion por Nombre");
+        System.out.println("4. Metodo de Insercion por Edad");
         return leer.nextInt();
     }
     public int selectSearchCriterion(){
@@ -35,7 +35,9 @@ public class view {
         return leer.nextInt();
     }
     public void displayPerson(person[] p, int i){
-        System.out.println("Name: " + p[i].getName() + ", Age: " + p[i].getAge());
+        for (int j = 0; j < p.length; j++) {
+            System.out.println("Persona " + (j+1) + ": " + p[j].toString());
+        }
     }
     public int inputAge(){
         System.out.println("Ingrese edad ");
@@ -44,5 +46,9 @@ public class view {
     public String inputName(){
         System.out.println("Ingrese nombre ");
         return leer.next();
+    }
+    public int inputSize(){
+        System.out.println("Ingrese el tamaño del arreglo: ");
+        return leer.nextInt();
     }
 }
